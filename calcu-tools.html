@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online student attendance calculator tool. Calculate your attendance percentage based on days present and total working days.">
+    <meta name="keywords" content="attendance calculator, student attendance, percentage calculator, school attendance, college attendance">
+    <meta name="author" content="Attendance Calculator Tool">
+    <meta name="robots" content="index, follow">
+    <title>Student Attendance Calculator | Calculate Your Attendance Percentage</title>
+    <link rel="canonical" href="https://yourwebsite.com/attendance-calculator" />
+    
+    <!-- Structured data for rich results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Student Attendance Calculator",
+      "description": "Tool to calculate student attendance percentage based on days present and total working days",
+      "url": "https://yourwebsite.com/attendance-calculator",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web Browser"
+    }
+    </script>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Student Attendance Calculator">
+    <meta property="og:description" content="Calculate your attendance percentage based on days present and total working days.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourwebsite.com/attendance-calculator">
+    <meta property="og:image" content="https://yourwebsite.com/images/attendance-calculator-preview.jpg">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Student Attendance Calculator">
+    <meta name="twitter:description" content="Calculate your attendance percentage based on days present and total working days.">
+    <meta name="twitter:image" content="https://yourwebsite.com/images/attendance-calculator-preview.jpg">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4285f4;
+            --secondary-color: #34a853;
+            --accent-color: #ea4335;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --medium-gray: #757575;
+            --white: #ffffff;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            background-color: var(--light-gray);
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        header {
+            background-color: var(--white);
+            box-shadow: var(--box-shadow);
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        main {
+            padding: 20px 0 40px;
+        }
+        
+        .calculator-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        @media (min-width: 992px) {
+            .calculator-container {
+                grid-template-columns: 1fr 300px;
+            }
+        }
+        
+        .calculator-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .calculator-card h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .calculator-card p {
+            margin-bottom: 25px;
+            color: var(--medium-gray);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="number"]:focus,
+        select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #3367d6;
+        }
+        
+        .result-container {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--light-gray);
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .result-container h3 {
+            margin-bottom: 15px;
+            color: var(--dark-gray);
+        }
+        
+        .result-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+        
+        .ad-container {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .ad-container p {
+            color: var(--medium-gray);
+            margin-bottom: 15px;
+        }
+        
+        .ad-placeholder {
+            width: 100%;
+            height: 100%;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--medium-gray);
+            border: 1px dashed #ccc;
+        }
+        
+        .info-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .info-section h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .info-section p {
+            margin-bottom: 15px;
+        }
+        
+        .info-section ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--white);
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: var(--white);
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .calculator-card h1 {
+                font-size: 24px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+            }
+            
+            .footer-links a {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">Attendance<span>Calculator</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container">
+            <div class="calculator-container">
+                <div class="calculator-content">
+                    <div class="calculator-card">
+                        <h1>Student Attendance Calculator</h1>
+                        <p>Calculate your attendance percentage based on days present and total working days in the academic period.</p>
+                        
+                        <form id="attendanceForm">
+                            <div class="form-group">
+                                <label for="totalDays">Total Working Days in the Period:</label>
+                                <input type="number" id="totalDays" name="totalDays" min="1" max="366" required placeholder="e.g., 30">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="presentDays">Number of Days Present:</label>
+                                <input type="number" id="presentDays" name="presentDays" min="0" max="366" required placeholder="e.g., 25">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="holidays">Number of Public Holidays (Optional):</label>
+                                <input type="number" id="holidays" name="holidays" min="0" max="366" placeholder="e.g., 2">
+                            </div>
+                            
+                            <button type="submit">Calculate Attendance</button>
+                        </form>
+                        
+                        <div class="result-container" id="resultContainer">
+                            <h3>Your Attendance Percentage:</h3>
+                            <p class="result-value" id="resultValue">0%</p>
+                            <div id="attendanceMessage"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-section">
+                        <h2>About Attendance Calculation</h2>
+                        <p>Attendance percentage is calculated by dividing the number of days present by the total working days, then multiplying by 100.</p>
+                        
+                        <h3>Formula:</h3>
+                        <p>Attendance Percentage = (Days Present / Total Working Days) × 100</p>
+                        
+                        <h3>Important Notes:</h3>
+                        <ul>
+                            <li>Public holidays are typically not counted as working days</li>
+                            <li>Some institutions may have different calculation methods</li>
+                            <li>Always verify with your institution's attendance policy</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="sidebar">
+                    <!-- AdSense Ad Unit - Replace with your Ad Unit ID -->
+                    <div class="ad-container">
+                        <p>Advertisement</p>
+                        <div class="ad-placeholder" id="ad-top">
+                            <!-- Google AdSense Code will be inserted here -->
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID" crossorigin="anonymous"></script>
+                            <!-- Attendance Calculator Top Ad -->
+                            <ins class="adsbygoogle"
+                                 style="display:block"
+                                 data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                                 data-ad-slot="YOUR_AD_SLOT_ID"
+                                 data-ad-format="auto"
+                                 data-full-width-responsive="true"></ins>
+                            <script>
+                                 (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                        </div>
+                    </div>
+                    
+                    <div class="ad-container">
+                        <p>Advertisement</p>
+                        <div class="ad-placeholder" id="ad-side">
+                            <!-- Google AdSense Code will be inserted here -->
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID" crossorigin="anonymous"></script>
+                            <!-- Attendance Calculator Side Ad -->
+                            <ins class="adsbygoogle"
+                                 style="display:block"
+                                 data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                                 data-ad-slot="YOUR_AD_SLOT_ID"
+                                 data-ad-format="auto"
+                                 data-full-width-responsive="true"></ins>
+                            <script>
+                                 (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/terms">Terms of Service</a>
+                    <a href="/contact">Contact Us</a>
+                </div>
+                <p class="copyright">© <span id="currentYear"></span> Attendance Calculator Tool. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current year in footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Form submission handler
+            document.getElementById('attendanceForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                calculateAttendance();
+            });
+            
+            // Calculate attendance function
+            function calculateAttendance() {
+                const totalDays = parseInt(document.getElementById('totalDays').value);
+                const presentDays = parseInt(document.getElementById('presentDays').value);
+                const holidays = parseInt(document.getElementById('holidays').value) || 0;
+                
+                // Validate inputs
+                if (presentDays > totalDays) {
+                    alert('Days present cannot be more than total working days');
+                    return;
+                }
+                
+                if (holidays > totalDays) {
+                    alert('Holidays cannot be more than total working days');
+                    return;
+                }
+                
+                // Calculate adjusted total days (excluding holidays)
+                const adjustedTotalDays = totalDays - holidays;
+                
+                if (adjustedTotalDays <= 0) {
+                    alert('Total working days must be greater than holidays');
+                    return;
+                }
+                
+                // Calculate percentage
+                const percentage = (presentDays / adjustedTotalDays) * 100;
+                const roundedPercentage = Math.round(percentage * 100) / 100; // Round to 2 decimal places
+                
+                // Display result
+                document.getElementById('resultValue').textContent = roundedPercentage + '%';
+                
+                // Add message based on percentage
+                const messageContainer = document.getElementById('attendanceMessage');
+                let message = '';
+                let messageClass = '';
+                
+                if (percentage >= 75) {
+                    message = 'Great! Your attendance meets the minimum requirement at most institutions.';
+                    messageClass = 'good-attendance';
+                } else if (percentage >= 50) {
+                    message = 'Warning! Your attendance is below the typical 75% requirement. Consider attending more classes.';
+                    messageClass = 'warning-attendance';
+                } else {
+                    message = 'Danger! Your attendance is critically low. You may face consequences at most institutions.';
+                    messageClass = 'danger-attendance';
+                }
+                
+                messageContainer.innerHTML = `<p class="${messageClass}">${message}</p>`;
+                
+                // Show result container
+                document.getElementById('resultContainer').style.display = 'block';
+                
+                // Scroll to result
+                document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            
+            // Initialize AdSense (replace with your actual AdSense code)
+            function initAdSense() {
+                // This is just a placeholder - your actual AdSense code should be in the HTML
+                console.log('AdSense initialization would happen here');
+            }
+            
+            initAdSense();
+        });
+    </script>
+</body>
+</html>
